@@ -61,7 +61,8 @@ class CPIData:
             while not line.startswith("Date "):
                 pass
 
-            # Remove new-line character at the end of each line.
+            # Remove new-line character at the end of each line
+            # and split into list
             data = line.rstrip().split()
 
             # Extract year from date by splitting date string
@@ -77,7 +78,7 @@ class CPIData:
 
             if current_year != year:
                 if current_year is not None:
-                    self.year_cpi[current_year] = sum(year_cpi) / len(year_pi)
+                    self.year_cpi[current_year] = sum(year_cpi) / len(year_cpi)
                 year_cpi = []
                 current_year = year
             year_cpi.append(cpi)
@@ -91,9 +92,9 @@ class CPIData:
         year has been specified i.e inflation.
 
         """
-        # Currently there is no CPI data for 2014
-        if current_year is None or current_year > 2013:
-            current_year = 2013
+        # Currently there is no CPI data after 2018
+        if current_year is None or current_year > 2018:
+            current_year = 2018
 
         # if data range doesn't provide a CPI for a given year,
         # use the edge data.
