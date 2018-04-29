@@ -310,7 +310,10 @@ def main():
     else:
         logging.basicConfig(level=logging.INFO)
 
+    # Grab CPI data
     cpi_data = CPIData()
+
+    # Grab platform API data
     gb_api = GiantbombAPI(opts.giantbomb_api_key)
 
     print("Disclaimer: This script uses data provided by FRED, Federal"
@@ -324,14 +327,40 @@ def main():
     else:
         cpi_data.load_from_url(opts.cpi_data_url, save_as_file=opts.cpi_file)
 
-    # Grab CPI data
+    platforms = []
+    counter = 0
 
-    # Grab platform API data
+    # Grab the platforms and calculate their current price
+    # in relation to the CPI value.
+    for platform in gb_api.get_platforms(sort='release_date:desc',
+                                         field_list=['release_date',
+                                                     'original_price',
+                                                     'abbreviation']):
+        # Skip platforms that don't have a release date or price.
+        if not is_valid_datset(platform):
+            continue
 
-    # Figure out current price of each platform
-    # Requires looping through each game platform and adjust the price based on CPI data
-    # Validate data so we do not skew results
+        # Figure out current price of each platform
+        year = int(platform['release_date'].split('-'[0]))
+        price = platform['original_price']
+        adjusted_price = cpi_data.get_adjusted_price(price, year)
+        platform['year'] = year
+        platform['original_price'] = price
+        platform['adjusted_price'] = adjusted_price
+        platforms.append(platform)
+
+        # Check if the dataset contains all the data we need.
+        if opts.limit is not None and counter + 1 >= opts.limit:
+            break
+        counter += 1
 
     # Generate graph for adjusted price data
-
+    if opts.plotfile:
+        generate_plot(platforms, opts.plotfile)
     # Generate CSV file to save adjusted price data
+    if opts.csv_file:
+        generate_csv(platforms, opts.csv_file)
+
+
+if __name__ == '__main__':
+    main()
