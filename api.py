@@ -1,8 +1,7 @@
-import sys
-sys.path.append('../')
 import argparse
 import logging
 import os
+os.path.append('../')
 
 import matplotlib.pyplot as plt
 import numpy as np
