@@ -76,7 +76,7 @@ class CPIData:
             data = line.rstrip().split()
 
             # Extract year from date by splitting date string
-            year = int(data[0].split["-"][0])
+            year = int(data[0].split("-")[0])
             cpi = float(data[1])
 
             if self.first_year is None:
