@@ -1,7 +1,6 @@
 import argparse
 import logging
 import os
-os.path.append('../')
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -286,7 +285,7 @@ def parse_args():
                         help='Path to file containing the CPI data')
     parser.add_argument('--cpi-data-url', default=CPI_DATA_URL,
                         help='URL which should be used as CPI data source')
-    parser.add_argument('--debug', default=False, actions='store_true',
+    parser.add_argument('--debug', default=False, action='store_true',
                         help='Increases the output level.')
     parser.add_argument('--csv-file',
                         help='Path to the PNG file which should contain the'
@@ -297,7 +296,7 @@ def parse_args():
     parser.add_argument('--limit', type=int,
                         help='Number of recent platforms to be considered')
     opts = parser.parse_args()
-    if not (opts.plotfile or opts.csv_file):
+    if not (opts.plot_file or opts.csv_file):
         parser.error("You have to specify either a --csv-file or --plot-file!")
     return opts
 
