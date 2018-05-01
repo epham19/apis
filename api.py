@@ -67,7 +67,7 @@ class CPIData:
         for line in fp:
             # Skip until we reach the header line "DATE"
             if not reached_dataset:
-                if line.startswith("Date "):
+                if line.startswith("DATE "):
                     reached_dataset = True
                 continue
 
