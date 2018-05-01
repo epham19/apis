@@ -166,7 +166,9 @@ class GiantbombAPI:
             # Need to make multiple calls given Giantbomb's limit for items
             # in a result set for this API is 100 items.
             params['offset'] = num_fetched_results
-            result = requests.get(self.base_url + '/platforms/', params=params)
+            result = requests.get(self.base_url + '/platforms/',
+                                  headers={'User-agent': 'new-coder-tutorial'},
+                                  params=params)
             print(result.url)
             print(result.status_code)
             result.raise_for_status()
