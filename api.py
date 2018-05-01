@@ -361,8 +361,8 @@ def main():
         counter += 1
 
     # Generate graph for adjusted price data
-    if opts.plotfile:
-        generate_plot(platforms, opts.plotfile)
+    if opts.plot_file:
+        generate_plot(platforms, opts.plot_file)
     # Generate CSV file to save adjusted price data
     if opts.csv_file:
         generate_csv(platforms, opts.csv_file)
