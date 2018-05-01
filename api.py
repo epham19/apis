@@ -167,6 +167,10 @@ class GiantbombAPI:
             # in a result set for this API is 100 items.
             params['offset'] = num_fetched_results
             result = requests.get(self.base_url + '/platforms/', params=params)
+            print(result.url)
+            print(result.status_code)
+            result.raise_for_status()
+
             result = result.json()
             if num_total_results is None:
                 num_total_results = int(result['number_of_total_results'])
