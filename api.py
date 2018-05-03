@@ -270,7 +270,7 @@ def generate_csv(platforms, output_file):
     dataset = tablib.Dataset(headers=['Abbreviation', 'Name', 'Year', 'Price',
                                       'Adjusted price'])
     for p in platforms:
-        dataset.append([p['abbreviations'], p['name'], p['year'],
+        dataset.append([p['abbreviation'], p['name'], p['year'],
                         p['original_price'], p['adjusted_price']])
 
     # If the output_file is a string it represents a path to a file which
@@ -341,13 +341,14 @@ def main():
     for platform in gb_api.get_platforms(sort='release_date:desc',
                                          field_list=['release_date',
                                                      'original_price',
-                                                     'abbreviation']):
+                                                     'abbreviation',
+                                                     'name']):
         # Skip platforms that don't have a release date or price.
         if not is_valid_datset(platform):
             continue
 
         # Figure out current price of each platform
-        year = int(platform['release_date'].split('-'[0]))
+        year = int(platform['release_date'].split('-')[0])
         price = platform['original_price']
         adjusted_price = cpi_data.get_adjusted_price(price, year)
         platform['year'] = year
