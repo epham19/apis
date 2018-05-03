@@ -255,7 +255,6 @@ def generate_plot(platforms, output_file):
     plt.grid(True)
 
     plt.savefig(output_file, dpi=72)
-    plt.show(dpi=72)
 
 
 def generate_csv(platforms, output_file):
