@@ -169,9 +169,6 @@ class GiantbombAPI:
             result = requests.get(self.base_url + '/platforms/',
                                   headers={'User-agent': 'new-coder-tutorial'},
                                   params=params)
-            print(result.url)
-            print(result.status_code)
-            result.raise_for_status()
 
             result = result.json()
             if num_total_results is None:
